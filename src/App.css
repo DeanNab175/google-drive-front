@@ -127,6 +127,38 @@ body {
     margin: 0 0 2rem;
 }
 
+.loading-box {
+    padding: .5rem 1rem;
+    text-align: center;
+    color: var(--whiteColor);
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+.loading-box p {
+    margin: 0;
+    font-size: 1.2rem;
+    font-family: var(--primaryFont)
+}
+
+.bg-animated-grad {
+	background: linear-gradient(270deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: bgGradientAnim 5s ease infinite;
+}
+
+@keyframes bgGradientAnim {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 @media screen and (min-width: 1025px) {
     .container {
         width: 80%;

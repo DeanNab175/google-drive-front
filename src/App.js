@@ -11,6 +11,7 @@ const App = () => {
   const [videoTitle, setVideoTitle] = useState("")
   const [folderActiveClass, setFolderActiveClass] = useState(null)
   const [driveEmail, setDriveEmail] = useState("3dsmax.mayacryeng@gmail.com")
+  const [loading, setLoading] = useState(true)
   
   useEffect(() => {
     const driveUrl = `https://driveapi.pythonanywhere.com/${driveEmail}`
@@ -28,6 +29,7 @@ const App = () => {
       setFiles(lsFiles)
       setVideoUrl(modifyUrl(sortedLSFirstEl.webViewLink))
       setVideoTitle(sortedLSFirstEl.name)
+      setLoading(false)
     } else {
       axios.get(url)
         .then(res => {
@@ -41,6 +43,7 @@ const App = () => {
           setFiles(sortedArr)
           setVideoUrl(modifyUrl(sortedFirstEl.webViewLink))
           setVideoTitle(sortedFirstEl.name)
+          setLoading(false)
         })
         .catch(err => console.log(err))
 
@@ -62,6 +65,7 @@ const App = () => {
     setFiles([])
     setVideoUrl("")
     setVideoTitle("")
+    setLoading(true)
   }
 
 
@@ -74,38 +78,46 @@ const App = () => {
         />
       </div>
 
-      <div className="container grid-container">
-        <div className="video-wrap">
-          {
-            videoUrl &&
-            <div className="video-box">
-              <Iframe srcLink={videoUrl} vidTitle={videoTitle} />
-            </div>
-          }
+      <div className="container">
+        {
+          loading &&
+          <div className="loading-box bg-animated-grad">
+            <p>Loading...</p>
+          </div>
+        }
+        <section className="grid-container">
+          <div className="video-wrap">
+            {
+              videoUrl &&
+              <div className="video-box">
+                <Iframe srcLink={videoUrl} vidTitle={videoTitle} />
+              </div>
+            }
+            
+            {
+              videoTitle && <h1>{videoTitle}</h1>
+            }
+          </div>
           
-          {
-            videoTitle && <h1>{videoTitle}</h1>
-          }
-        </div>
-        
-        <div className="folder-wrap">
-          { files &&
-            files.map( ({folderContent, folderId, folderName}, index) => {
-              return (
-                <Folder
-                  key={folderId}
-                  idx={index}
-                  folderId={"folder-" + index}
-                  folderName={folderName}
-                  content={folderContent}
-                  onChangeVideo={onChangeVideo}
-                  folderActiveClass={folderActiveClass === index ? "active" : ""}
-                  onChangeFolderActiveIdx={() => onChangeFolderActiveIdx(index)}
-                  />
-              )
-            })
-          }
-        </div>
+          <div className="folder-wrap">
+            { files &&
+              files.map( ({folderContent, folderId, folderName}, index) => {
+                return (
+                  <Folder
+                    key={folderId}
+                    idx={index}
+                    folderId={"folder-" + index}
+                    folderName={folderName}
+                    content={folderContent}
+                    onChangeVideo={onChangeVideo}
+                    folderActiveClass={folderActiveClass === index ? "active" : ""}
+                    onChangeFolderActiveIdx={() => onChangeFolderActiveIdx(index)}
+                    />
+                )
+              })
+            }
+          </div>
+        </section>
       </div>
     </div>
   );
