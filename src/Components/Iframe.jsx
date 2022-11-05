@@ -1,6 +1,6 @@
-const Iframe = ({srcLink}) => {
+const Iframe = ({srcLink, vidTitle}) => {
     return (
-        <iframe className="responsive-iframe" src={srcLink}></iframe>
+        <iframe className="responsive-iframe" src={srcLink} title={vidTitle}></iframe>
     )
 }
 

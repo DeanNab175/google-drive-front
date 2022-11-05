@@ -79,7 +79,7 @@ const App = () => {
           {
             videoUrl &&
             <div className="video-box">
-              <Iframe srcLink={videoUrl} />
+              <Iframe srcLink={videoUrl} vidTitle={videoTitle} />
             </div>
           }
           
